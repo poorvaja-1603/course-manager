@@ -1,0 +1,75 @@
+.btn, .edit-btn, .delete-btn,.authen {
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    margin: 0;
+    font-size: 16px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(7, 37, 61, 0.25);
+    border: 3px solid #07253d;
+    border-radius: 8px;
+    transition: transform 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    background: #c6def1;
+    color: #07253d;
+    font-family: inherit;
+}
+
+.edit-btn, .delete-btn{
+    width: 200px;
+}
+
+.switch-authen{
+    padding: 10px;
+    width:150px;
+    margin: 0;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(227, 115, 173, 0.25);
+    border: 2px solid black;
+    border-radius: 8px;
+    transition: transform 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    background: rgb(162, 82, 94);
+    color: #f5f5f5;
+}
+
+p{
+    font-size: 18px;
+    font-weight:bold;
+    color:rgba(75, 14, 46, 0.25)
+}
+
+.btn.add-btn {
+    color: black;
+    width: 100px;
+}
+
+
+.btn.edit-btn:hover {
+    background: lightgoldenrodyellow;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.25);
+}
+
+.btn.delete-btn:hover {
+    background: rgb(206, 88, 88);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.25);
+}
+
+.btn:hover, .add-btn:hover {
+    background: #65a5d9;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.25);
+}
+
+.btn.switch-authen:hover{
+    background:rgb(224, 127, 142);
+    transform:translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.25);;
+}
+
+.btn:disabled, .delete-btn:disabled, .edit-btn:disabled, .add-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}

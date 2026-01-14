@@ -1,0 +1,22 @@
+.course-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+
+.buttons{
+    margin-top: 0;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+h2{
+    font-weight: bold;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    color:#07253d;
+}

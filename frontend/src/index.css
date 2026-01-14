@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+body{
+  background: #c6def1;
+  font-family: 'Josefin Sans', Helvetica, sans-serif;
+  color: white;
+  margin:0;
+}
