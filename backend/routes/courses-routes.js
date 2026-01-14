@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", coursesController.getAllCourses);
 router.post(
-  "/add",
+  "/",
   [check("title").not().isEmpty()],
   coursesController.createdCourse
 );

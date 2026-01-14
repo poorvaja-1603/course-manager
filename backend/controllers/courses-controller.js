@@ -32,20 +32,49 @@ const getCoursesById = async (req, res, next) => {
   res.json({ course: course.toObject({ getters: true }) });
 };
 
-const createdCourse = (req, res, next) => {
+const createdCourse = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
     return next(new HttpError("Invalid input", 422));
   }
-  const { title } = req.body;
+  const {
+    title,
+    shortDescription,
+    longDescription,
+    duration,
+    mode,
+    applicationDeadline,
+    createdBy,
+    createdAt,
+    isActive,
+    applicationsCount,
+  } = req.body;
   const createdCourse = {
-    id: uuidv4(),
-    title: title,
+    title,
+    shortDescription,
+    longDescription,
+    duration,
+    mode,
+    applicationDeadline,
+    createdBy,
+    createdAt,
+    isActive,
+    applicationsCount,
   };
 
-  DUMMY_COURSES.push(createdCourse);
-  res.status(201).json({ message: "Place created successfully!" });
+  try {
+    await createdCourse.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Cannnot create course right now, Try again Later",
+      500
+    );
+    return next(error);
+  }
+  res
+    .status(201)
+    .json({ createdCourse: createdCourse.toObject({ getters: true }) });
 };
 
 const getAllCourses = (req, res, next) => {
