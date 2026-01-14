@@ -1,5 +1,6 @@
 const express = require("express");
-
+require("dotenv").config();
+const mongoose = require("mongoose");
 const coursesRoutes = require("./routes/courses-routes");
 const authRoutes = require("./routes/auth-routes");
 const HttpError = require("./models/http-error");
@@ -22,7 +23,13 @@ app.use((error, req, res, next) => {
   res.status(error.code || 500);
   res.json({ message: error.message || "An unknown error occurred!" });
 });
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    app.listen(3000, () => {
+      console.log("Connected Successfully!");
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });

@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const Course = require("../models/courses");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 
@@ -13,15 +14,22 @@ let DUMMY_COURSES = [
   },
 ];
 
-const getCoursesById = (req, res, next) => {
+const getCoursesById = async (req, res, next) => {
   const courseId = req.params.cid;
-  const course = DUMMY_COURSES.find((c) => {
-    return c.id === courseId;
-  });
-  if (!course) {
-    throw new HttpError("NO course found with given id", 404);
+  let course;
+  try {
+    course = await Course.findById(courseId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong while finding, Please try again later",
+      500
+    );
+    return next(error);
   }
-  res.json({ course });
+  if (!course) {
+    throw new HttpError("No course found with given id", 404);
+  }
+  res.json({ course: course.toObject({ getters: true }) });
 };
 
 const createdCourse = (req, res, next) => {
