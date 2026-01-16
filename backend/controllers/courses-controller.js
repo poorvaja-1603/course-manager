@@ -1,18 +1,6 @@
-const { v4: uuidv4 } = require("uuid");
 const Course = require("../models/course");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
-
-let DUMMY_COURSES = [
-  {
-    id: "c1",
-    title: "React",
-  },
-  {
-    id: "c2",
-    title: "ML",
-  },
-];
 
 const getCoursesById = async (req, res, next) => {
   const courseId = req.params.cid;

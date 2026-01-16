@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
+const User = require("../models/user");
 
 const DUMMY_USERS = [
   {
@@ -19,31 +20,49 @@ const DUMMY_USERS = [
   },
 ];
 
-const signup = (req, res, next) => {
+const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
     return next(new HttpError("Invalid input", 422));
   }
   const { name, email, password, role } = req.body;
-  const hasUser = DUMMY_USERS.find((u) => u.email === email);
-  if (hasUser) {
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    console.log(err);
+    return next(new HttpError("Something went wrong, try again later!", 500));
+  }
+  if (existingUser) {
     throw new HttpError("User already exists!", 422);
   }
-  const createdUser = {
-    id: uuidv4(),
+  const createdUser = new User({
     name,
     email,
     password,
     role,
-  };
-  DUMMY_USERS.push(createdUser);
-  res.status(200).json({ user: createdUser });
+  });
+  try {
+    await createdUser.save();
+  } catch (err) {
+    console.log(err);
+    return next(
+      new HttpError("Something went wrong, try signing up later!", 500)
+    );
+  }
+  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
-  const identifiedUser = DUMMY_USERS.find((u) => u.email === email);
+  let identifiedUser;
+  try {
+    identifiedUser = await User.findOne({ email: email });
+  } catch (err) {
+    console.log(err);
+    return next(new HttpError("Something went wrong, try again later!", 500));
+  }
   if (!identifiedUser || identifiedUser.password !== password) {
     throw new HttpError("Wrong credentials", 401);
   }
