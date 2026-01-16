@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
-const Course = require("../models/courses");
+const Course = require("../models/course");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 
